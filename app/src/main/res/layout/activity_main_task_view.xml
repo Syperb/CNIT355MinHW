@@ -17,19 +17,51 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_alignParentLeft="true"
-                 android:textSize="20sp"/>
+                 android:textSize="16sp"
+                 android:id="@+id/txtName"
+                 android:layout_alignParentTop="true" />
              <TextView android:text="Due"
                  android:layout_weight="1"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 android:textSize="20sp"/>
+                 android:layout_centerInParent="false"
+                 android:textSize="16sp"
+                 android:id="@+id/txtDue"
+                 android:layout_alignParentTop="true"
+                 android:layout_centerHorizontal="true" />
              <TextView android:text="Progress"
                  android:layout_alignParentRight="true"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textSize="20sp"/>
+                 android:textSize="16sp"
+                 android:id="@+id/txtProgress"
+                 android:layout_alignParentTop="true" />
 
+        <ImageView
+            android:layout_width="60dp"
+            android:gravity="center"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/plusicon"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/btnNew"
+            android:background="@drawable/roundbutton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/gearicon"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/btnSettings"
+            android:background="@drawable/roundbutton"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>
@@ -53,30 +85,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-        <TableRow>
 
-            <ImageView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="60dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/plusicon"
-                android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:id="@+id/btnNew"
-                android:background="@drawable/roundbutton"
-                android:layout_marginRight="230dp"/>
+        <TableRow android:layout_height="60dp"
+            android:layout_width="60dp">
 
-            <ImageView
-                android:layout_width="60dp"
-                android:gravity="center"
-                android:layout_height="60dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/gearicon"
-                android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:id="@+id/btnSettings"
-                android:background="@drawable/roundbutton" />
         </TableRow>
 
     </TableLayout>
