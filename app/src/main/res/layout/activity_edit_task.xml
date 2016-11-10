@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app=""
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_create_task"
     android:layout_width="match_parent"
@@ -21,7 +22,8 @@
         android:background="@drawable/roundbutton"
         android:id="@+id/btnBack"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:onClick="goBack" />
 
     <ImageView
         android:layout_width="60dp"
@@ -35,7 +37,8 @@
         android:id="@+id/btnSave"
         android:layout_weight="1"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:onClick="saveInfo" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -102,7 +105,7 @@
 
             <CalendarView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:id="@+id/editDueDate"
                 style="@android:style/Widget.Holo.CalendarView" />
 

@@ -7,11 +7,41 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.cnit355.minhw.mainTaskView">
+    tools:context="com.example.cnit355.minhw.mainTaskView"
+    android:id="@+id/container">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="25dp">
+        <TableLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+
+
+
+         </TableLayout>
+    </ScrollView>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TableRow android:layout_height="60dp"
+            android:layout_width="60dp">
+
+        </TableRow>
+
+    </TableLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tableLayout">
 
              <TextView android:text="Name"
                  android:layout_width="wrap_content"
@@ -48,7 +78,8 @@
             android:id="@+id/btnNew"
             android:background="@drawable/roundbutton"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:onClick="newAssignment" />
 
         <ImageView
             android:layout_width="60dp"
@@ -61,39 +92,11 @@
             android:background="@drawable/roundbutton"
             android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:onClick="goToSettings" />
 
 
     </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="25dp">
-        <TableLayout
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-
-
-
-         </TableLayout>
-    </ScrollView>
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <TableRow android:layout_height="60dp"
-            android:layout_width="60dp">
-
-        </TableRow>
-
-    </TableLayout>
-
-
 
 
 </RelativeLayout>

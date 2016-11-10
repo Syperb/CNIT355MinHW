@@ -10,4 +10,194 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.cnit355.minhw.activity_settings">
 
+    <ImageView
+        android:layout_width="60dp"
+        android:gravity="center"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:src="@android:drawable/ic_menu_revert"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/roundbutton"
+        android:id="@+id/btnBack"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="goBack" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:gravity="center"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:src="@android:drawable/ic_menu_save"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/roundbutton"
+        android:id="@+id/btnSave"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="saveInfo" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Homework Per Day:"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:id="@+id/txtHomework" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editName"
+                android:textSize="16sp"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Push Notifications:"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:id="@+id/txtNotifications" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20sp"
+                android:id="@+id/swNotifications" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Assignment Reminders"
+                android:id="@+id/txtAssignmentRem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:paddingLeft="20sp"
+                android:textStyle="normal|bold" />
+            </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Daily"
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:paddingLeft="20sp" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20sp"
+                android:id="@+id/swDaily" />
+
+        </TableRow>
+
+        <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:text="Hours Before Due:"
+            android:id="@+id/txtHoursBeforeDue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:paddingLeft="20sp" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20sp"
+                android:id="@+id/swHoursBefore" />
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="# of Hours:"
+                android:id="@+id/txtHours"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:paddingLeft="40sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/editHours"
+                android:textSize="16sp"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:text="Homework Suggestions:"
+                android:id="@+id/txtHomeworkSug"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:paddingLeft="20sp" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingRight="20sp"
+                android:id="@+id/swHomework" />
+
+        </TableRow>
+
+    </TableLayout>
+
 </RelativeLayout>
