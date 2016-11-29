@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.cnit355.minhw.mainTaskView"
-    android:id="@+id/container">
+    android:id="@+id/container"
+    android:background="@android:color/white">
 
     <ScrollView
         android:layout_width="match_parent"

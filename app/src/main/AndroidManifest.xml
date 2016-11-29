@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditTask" />
-        <activity android:name=".activity_settings"></activity>
+        <activity android:name=".activity_settings" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
