@@ -1,5 +1,6 @@
 package com.example.cnit355.minhw;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentA = new mainTaskView();
+        fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
     }
