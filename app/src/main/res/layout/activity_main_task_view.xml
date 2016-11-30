@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.cnit355.minhw.mainTaskView"
-    android:id="@+id/container"
-    android:background="@android:color/white">
+    tools:context="com.example.cnit355.minhw.mainTaskView">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="25dp">
-        <TableLayout
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-
-
-
-         </TableLayout>
-    </ScrollView>
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <TableRow android:layout_height="60dp"
-            android:layout_width="60dp">
+        <TableRow
+            android:layout_width="60dp"
+            android:layout_height="60dp">
 
         </TableRow>
 
@@ -42,60 +29,81 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/tableLayout"
+
         android:background="@android:color/white">
 
-             <TextView android:text="Name"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentLeft="true"
-                 android:textSize="16sp"
-                 android:id="@+id/txtName"
-                 android:layout_alignParentTop="true" />
-             <TextView android:text="Due"
-                 android:layout_weight="1"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="false"
-                 android:textSize="16sp"
-                 android:id="@+id/txtDue"
-                 android:layout_alignParentTop="true"
-                 android:layout_centerHorizontal="true" />
-             <TextView android:text="Progress"
-                 android:layout_alignParentRight="true"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:textSize="16sp"
-                 android:id="@+id/txtProgress"
-                 android:layout_alignParentTop="true" />
-
-        <ImageView
-            android:layout_width="60dp"
-            android:gravity="center"
-            android:layout_height="60dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/plusicon"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/btnNew"
-            android:background="@drawable/roundbutton"
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="newAssignment" />
+            android:layout_alignParentTop="true"
+            android:text="Name"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtDue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="false"
+            android:layout_weight="1"
+            android:text="Due"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="Progress"
+            android:textSize="16sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="25dp">
+
+
+            <ListView
+                android:id="@+id/listViewTask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
+        </ScrollView>
 
         <ImageView
+            android:id="@+id/btnNew"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/gearicon"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            android:id="@+id/btnSettings"
             android:background="@drawable/roundbutton"
             android:gravity="center"
+            android:onClick="newAssignment"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/plusicon" />
+
+        <ImageView
+            android:id="@+id/btnSettings"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:onClick="goToSettings" />
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundbutton"
+            android:gravity="center"
+            android:onClick="goToSettings"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gearicon" />
 
 
     </RelativeLayout>
