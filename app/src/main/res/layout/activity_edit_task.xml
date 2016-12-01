@@ -103,12 +103,12 @@
                 android:layout_weight="1"
                 android:textSize="16sp" />
 
-            <CalendarView
+            <TextView
+                android:text="Select a Date"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:id="@+id/editDueDate"
-                style="@android:style/Widget.Holo.CalendarView"
-                android:backgroundTint="@android:color/white" />
+                android:layout_height="match_parent"
+                android:id="@+id/btnDate"
+                android:gravity="center" />
 
         </TableRow>
 

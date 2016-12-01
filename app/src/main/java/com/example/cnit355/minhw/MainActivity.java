@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     activity_settings fragmentC;
     File taskDir = new File("/Tasks");
     TextView taskName;
+    DatePickerFragment fragmentD;
 
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
+        fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
 
         //tries to make a directory to store files in
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentB).commit();
         } else if (index == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentC).commit();
+        } else if (index == 3){
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD).commit();
         }
     }
 }

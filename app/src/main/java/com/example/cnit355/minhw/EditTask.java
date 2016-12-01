@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -37,6 +38,15 @@ public class EditTask extends Fragment {
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
                 activity.onFragmentChanged(0);
+            }
+        });
+
+        TextView btnDate = (TextView) rootView.findViewById(R.id.btnDate);
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.onFragmentChanged(3);
             }
         });
 
@@ -85,11 +95,6 @@ public class EditTask extends Fragment {
                 }
 
 
-
-
-
-
-
                 MainActivity activity = (MainActivity) getActivity();
                 activity.onFragmentChanged(0);
             }
@@ -97,5 +102,6 @@ public class EditTask extends Fragment {
 
         return rootView;
     }
+
 
 }
