@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     EditTask fragmentB;
     activity_settings fragmentC;
     File taskDir = new File("/Tasks");
-    TextView taskName = (TextView) findViewById(R.id.txtName);
+    TextView taskName;
 
 
     @Override
@@ -27,13 +27,15 @@ public class MainActivity extends AppCompatActivity {
         fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
+        taskName = (TextView) findViewById(R.id.txtName);
 
         //tries to make a directory to store files in
         taskDir = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + taskDir);
 
 
         try {
-            taskDir.mkdir();
+            if (!taskDir.exists())
+                taskDir.mkdir();
         } catch (Exception e){e.printStackTrace();}
 
         //Toast.makeText(this, this.getApplicationContext().getFilesDir().getAbsolutePath(), Toast.LENGTH_SHORT).show();
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public void onFragmentChanged(int index) {
         if (index == 0) {

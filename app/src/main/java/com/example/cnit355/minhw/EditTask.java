@@ -12,9 +12,11 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
@@ -44,32 +46,48 @@ public class EditTask extends Fragment {
             public void onClick(View v) {
 
                 EditText editTaskComplete = (EditText) rootView.findViewById(R.id.editCompletion);
-                TextView txtTaskClass = (TextView) rootView.findViewById(R.id.txtClass);
-                TextView txtTaskDesc = (TextView) rootView.findViewById(R.id.txtDescription);
-                TextView txtTaskName = (TextView) rootView.findViewById(R.id.txtName);
+                EditText txtTaskClass = (EditText) rootView.findViewById(R.id.editClass);
+                EditText txtTaskDesc = (EditText) rootView.findViewById(R.id.editDescription);
+                EditText txtTaskName = (EditText) rootView.findViewById(R.id.editName);
                 TimePicker timePicker = (TimePicker) rootView.findViewById(R.id.editDueTime);
                 SeekBar seekBar = (SeekBar) rootView.findViewById(R.id.progressBar);
-                File edittedTask = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + txtTaskName);
+                File editedTask = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + txtTaskName.getText().toString());
 
 
 
 
-                if (edittedTask.exists()){
+                if (editedTask.exists()){
                     //create dialog to ask user if they want to overwrite
+                    Toast.makeText(getContext(), "Task already exists", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     try {
-                        OutputStreamWriter outFs = new OutputStreamWriter(getActivity().openFileOutput(txtTaskName.getText().toString(), MODE_PRIVATE));
-                        //outFs.write();
-                        outFs.close();
+                        FileWriter writer = new FileWriter(editedTask);
+                        writer.append(
+                                txtTaskName.getText().toString() + "\n"
+                                + txtTaskClass.getText().toString() + "\n"
+                                + "dateformatplaceholder" + "\n"
+                                + timePicker.getHour() + "\n"
+                                + timePicker.getMinute() + "\n"
+                                + txtTaskDesc.getText().toString() + "\n"
+                                + seekBar.getProgress() + "\n"
+                                + editTaskComplete.getText().toString()
 
-                    } catch (IOException e) {e.printStackTrace();}
+
+                        );
+
+                        writer.close();
+                        //OutputStreamWriter outFs = new OutputStreamWriter(getActivity().openFileOutput(txtTaskName.getText().toString(), MODE_PRIVATE));
+                        //outFs.write();
+                        //outFs.close();
+
+                    } catch (IOException e) {throw new Error(e);}
                 }
 
 
 
 
-                //Functionality of Save Button
+
 
 
                 MainActivity activity = (MainActivity) getActivity();
