@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class DatePickerFragment extends Fragment {
 
@@ -18,6 +19,7 @@ public class DatePickerFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_edit_task, container,
                 false);
+
 
         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -32,12 +34,10 @@ public class DatePickerFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //Functionality of Save Button
-
-
                 MainActivity activity = (MainActivity) getActivity();
+
+                activity.btnDate.setText(activity.realDateString);
+
                 activity.onFragmentChanged(1);
             }
         });

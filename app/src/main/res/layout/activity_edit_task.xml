@@ -108,7 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/btnDate"
-                android:gravity="center" />
+                android:gravity="center"
+                android:clickable="true" />
 
         </TableRow>
 
