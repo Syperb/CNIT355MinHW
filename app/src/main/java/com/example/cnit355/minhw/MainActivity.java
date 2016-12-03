@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     File taskDir = new File("/Tasks");
     TextView taskName;
     DatePickerFragment fragmentD;
-    TextView btnDate;
+    Button btnDate;
     String dateString, realDateString;
     SimpleDateFormat date;
     CalendarView realDate;
@@ -38,11 +39,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentC = new activity_settings();
         fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
-        btnDate = (TextView) findViewById(R.id.btnDate);
-        dateString = (String) btnDate.getText();
+        btnDate = (Button) findViewById(R.id.button);
         realDate = (CalendarView) findViewById(R.id.calendarView);
-        date = new SimpleDateFormat("EEEE, MMM dd, YYYY");
-        realDateString = date.format(new Date(realDate.getDate()));
+        date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
 
 
 
@@ -74,5 +73,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (index == 3){
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD).commit();
         }
+    }
+
+    public void clickDate(View view){
+        onFragmentChanged(3);
     }
 }

@@ -103,13 +103,12 @@
                 android:layout_weight="1"
                 android:textSize="16sp" />
 
-            <TextView
-                android:text="Select a Date"
+            <Button
+                android:text="Button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/btnDate"
-                android:gravity="center"
-                android:clickable="true" />
+                android:id="@+id/button"
+                android:onClick="clickDate" />
 
         </TableRow>
 

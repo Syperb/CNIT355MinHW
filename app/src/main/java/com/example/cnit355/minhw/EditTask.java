@@ -41,15 +41,6 @@ public class EditTask extends Fragment {
             }
         });
 
-        TextView btnDate = (TextView) rootView.findViewById(R.id.btnDate);
-        btnDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.onFragmentChanged(3);
-            }
-        });
-
         ImageView btnSave = (ImageView) rootView.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
+
 public class DatePickerFragment extends Fragment {
 
     @Nullable
@@ -36,6 +38,7 @@ public class DatePickerFragment extends Fragment {
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
 
+                activity.realDateString = activity.date.format(new Date(activity.realDate.getDate()));
                 activity.btnDate.setText(activity.realDateString);
 
                 activity.onFragmentChanged(1);
