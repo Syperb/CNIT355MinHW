@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentC = new activity_settings();
         fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
-        btnDate = (Button) findViewById(R.id.button);
+        btnDate = (Button) findViewById(R.id.btnCalendar);
         realDate = (CalendarView) findViewById(R.id.calendarView);
         date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
 

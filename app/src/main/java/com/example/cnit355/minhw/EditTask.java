@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,17 @@ public class EditTask extends Fragment {
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
                 activity.onFragmentChanged(0);
+            }
+        });
+
+        Button btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity) getActivity();
+                Log.d("EditTask", "Before attempt to change fragment to datepicker");
+                activity.onFragmentChanged(3);
+                Log.d("EditTask", "after attempt to change fragment to datepicker");
             }
         });
 
