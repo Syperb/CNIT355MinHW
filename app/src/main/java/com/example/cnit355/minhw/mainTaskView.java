@@ -111,7 +111,7 @@ public class mainTaskView extends Fragment {
         listViewMP3.setDividerHeight(20);
         listViewMP3.setLongClickable(true);
 
-        
+
         listViewMP3.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
