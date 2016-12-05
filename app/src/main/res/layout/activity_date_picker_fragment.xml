@@ -16,7 +16,7 @@
         android:gravity="center"
         android:layout_height="60dp"
         android:adjustViewBounds="true"
-        android:src="@android:drawable/ic_menu_revert"
+        android:src="@android:drawable/ic_menu_save"
         android:padding="5dp"
         android:scaleType="centerCrop"
         android:background="@drawable/roundbutton"
@@ -25,20 +25,20 @@
         android:layout_alignParentLeft="true"
         android:onClick="goBack" />
 
-    <ImageView
-        android:layout_width="60dp"
-        android:gravity="center"
-        android:layout_height="60dp"
-        android:adjustViewBounds="true"
-        android:src="@android:drawable/ic_menu_save"
-        android:padding="5dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/roundbutton"
-        android:id="@+id/btnSave"
-        android:layout_weight="1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="saveInfo" />
+    <!--<ImageView-->
+        <!--android:layout_width="60dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:src="@android:drawable/ic_menu_save"-->
+        <!--android:padding="5dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:background="@drawable/roundbutton"-->
+        <!--android:id="@+id/btnSave"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:onClick="saveInfo" />-->
 
     <CalendarView
         android:layout_width="match_parent"

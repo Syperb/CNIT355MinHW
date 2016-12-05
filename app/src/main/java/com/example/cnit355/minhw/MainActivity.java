@@ -3,9 +3,11 @@ package com.example.cnit355.minhw;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -16,7 +18,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+                            implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener{
 
     mainTaskView fragmentA;
     EditTask fragmentB;
@@ -64,5 +67,17 @@ public class MainActivity extends AppCompatActivity {
         } else if (index == 3){
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD).commit();
         }
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialogFragment){
+
+        Log.d("MainActivity", "PositiveClick");
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialogFragment){
+        Log.d("MainActivity", "NegativeClick");
+        onFragmentChanged(1);
     }
 }

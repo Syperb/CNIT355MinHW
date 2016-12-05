@@ -4,8 +4,10 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v4.app.DialogFragment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 
 import static java.lang.System.in;
 
-public class mainTaskView extends Fragment {
+public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener{
     @Nullable
     @Override
 
@@ -86,7 +89,7 @@ public class mainTaskView extends Fragment {
 
                 fileName = file.getName();
 
-                fileName = padRight(fileName, 25) + padRight(date + " at " + hour + ":" + minute, 30) + progress + "%";
+                fileName = padRight(fileName, 20) + padRight(date + " at " + hour + ":" + minute, 30) + progress + "%";
                 taskList.add(fileName);
             }
 
@@ -112,18 +115,23 @@ public class mainTaskView extends Fragment {
         listViewMP3.setLongClickable(true);
 
 
+
+
+
         listViewMP3.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
 
-                MainActivity activity = (MainActivity) getActivity();
-                activity.onFragmentChanged(1);
+
+                ConfirmDeleteDialogFragment dialogFragment = new ConfirmDeleteDialogFragment();
+                dialogFragment.show(getFragmentManager(), "DialogFragment");
 
                 return true;
 
             }
         });
+
 
 
 
@@ -143,6 +151,17 @@ public class mainTaskView extends Fragment {
     }
 
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialogFragment){
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialogFragment){
+        MainActivity activity = (MainActivity) getActivity();
+        activity.onFragmentChanged(1);
+        Log.d("MainActivity", "PositiveClick");
+    }
 
 
 }

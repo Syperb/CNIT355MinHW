@@ -93,7 +93,7 @@ public class EditTask extends Fragment {
                         writer.append(
                                 txtTaskName.getText().toString() + "\n"
                                 + txtTaskClass.getText().toString() + "\n"
-                                + "99/99/99" + "\n"
+                                + btnCalendar.getText().toString() + "\n"
                                 + timePicker.getHour() + "\n"
                                 + timePicker.getMinute() + "\n"
                                 + txtTaskDesc.getText().toString() + "\n"
