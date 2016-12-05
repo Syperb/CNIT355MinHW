@@ -1,6 +1,7 @@
 package com.example.cnit355.minhw;
 
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     File taskDir = new File("/Tasks");
     TextView taskName;
     DatePickerFragment fragmentD;
-    Button btnDate;
-    String dateString, realDateString;
+    String dateString;
     SimpleDateFormat date;
-    CalendarView realDate;
 
 
     @Override
@@ -39,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentC = new activity_settings();
         fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
-        btnDate = (Button) findViewById(R.id.btnCalendar);
-        realDate = (CalendarView) findViewById(R.id.calendarView);
         date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
 
 
@@ -55,13 +52,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){e.printStackTrace();}
 
         //Toast.makeText(this, this.getApplicationContext().getFilesDir().getAbsolutePath(), Toast.LENGTH_SHORT).show();
-
-
-
-
     }
-
-
 
     public void onFragmentChanged(int index) {
         if (index == 0) {
@@ -73,9 +64,5 @@ public class MainActivity extends AppCompatActivity {
         } else if (index == 3){
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD).commit();
         }
-    }
-
-    public void clickDate(View view){
-        onFragmentChanged(3);
     }
 }

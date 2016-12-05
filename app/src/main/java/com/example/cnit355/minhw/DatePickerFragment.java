@@ -1,5 +1,6 @@
 package com.example.cnit355.minhw;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +9,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class DatePickerFragment extends Fragment {
+
+    CalendarView realDate;
+    String message;
+    SimpleDateFormat date;
+    EditTask editTask;
 
     @Nullable
     @Override
@@ -23,8 +33,11 @@ public class DatePickerFragment extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_date_picker_fragment, container,
                 false);
 
+        editTask = new EditTask();
+        realDate = (CalendarView)rootView.findViewById(R.id.calendarView);
         Log.d("DatePicker", "Inside datepicker onCreateView method");
 
+        //onCLick method for Back Button
         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,19 +47,21 @@ public class DatePickerFragment extends Fragment {
             }
         });
 
-        ImageView btnSave = (ImageView) rootView.findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        //OnDateChange listener for the CalendarView
+        realDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 MainActivity activity = (MainActivity) getActivity();
 
-                activity.realDateString = activity.date.format(new Date(activity.realDate.getDate()));
-                activity.btnDate.setText(activity.realDateString);
-
-                activity.onFragmentChanged(1);
+                //Changes the text of the button to the selected day
+                activity.dateString = Integer.toString(month + 1) +
+                        "/" + Integer.toString(dayOfMonth) +
+                        "/" + Integer.toString(year);
             }
         });
 
         return rootView;
         }
+
+
 }

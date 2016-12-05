@@ -25,6 +25,20 @@ import java.io.OutputStreamWriter;
 import static android.content.Context.MODE_PRIVATE;
 
 public class EditTask extends Fragment {
+
+    Button btnCalendar;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MainActivity activity = (MainActivity) getActivity();
+
+        if (activity.dateString != null){
+            btnCalendar.setText(activity.dateString);
+        }
+    }
+
     @Nullable
     @Override
 
@@ -33,6 +47,7 @@ public class EditTask extends Fragment {
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_edit_task, container,
                 false);
 
+        btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +57,6 @@ public class EditTask extends Fragment {
             }
         });
 
-        Button btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +113,7 @@ public class EditTask extends Fragment {
 
 
                 MainActivity activity = (MainActivity) getActivity();
+
                 activity.onFragmentChanged(0);
             }
         });
