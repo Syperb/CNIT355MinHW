@@ -1,5 +1,8 @@
 package com.example.cnit355.minhw;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Environment;
@@ -7,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     DatePickerFragment fragmentD;
     String dateString;
     SimpleDateFormat date;
+    NotificationCompat.Builder notifBuilder;
 
 
     @Override
@@ -36,18 +41,26 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Data Definition
         fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
         fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
         date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
+        notifBuilder = new NotificationCompat.Builder(this);
+        NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationID = 1;
 
-
+        //Create Notification
+        notifBuilder.setSmallIcon(R.drawable.calendar);
+        notifBuilder.setContentTitle("Notification from MinHW");
+        notifBuilder.setContentText("These assignments are due today:");
+        //Send Notification
+        notifManager.notify(notificationID, notifBuilder.build());
 
         //tries to make a directory to store files in
         taskDir = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + taskDir);
-
 
         try {
             if (!taskDir.exists())
