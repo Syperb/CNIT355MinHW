@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity
     public void onDialogYesClick(DialogFragment dialogFragment) {
 
         overwrite.delete();
+        check = null;
     }
 
     @Override
