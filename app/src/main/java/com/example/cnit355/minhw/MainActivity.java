@@ -4,6 +4,8 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
-                            implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener{
+                            implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener,
+                            mainTaskView.retrieveTaskListener,
+                            ConfirmOverwriteDialogFragment.ConfirmOverwriteDialogListener{
 
     mainTaskView fragmentA;
     EditTask fragmentB;
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity
     DatePickerFragment fragmentD;
     String dateString;
     SimpleDateFormat date;
+    File check;
+    File overwrite;
+    FragmentManager mFragmentManager;
 
 
     @Override
@@ -59,13 +66,13 @@ public class MainActivity extends AppCompatActivity
 
     public void onFragmentChanged(int index) {
         if (index == 0) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentA).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentA, "MainTaskView").commit();
         } else if (index == 1) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentB).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentB, "EditTask").commit();
         } else if (index == 2) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentC).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentC, "Settings").commit();
         } else if (index == 3){
-            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD, "DatePicker").commit();
         }
     }
 
@@ -73,11 +80,59 @@ public class MainActivity extends AppCompatActivity
     public void onDialogPositiveClick(DialogFragment dialogFragment){
 
         Log.d("MainActivity", "PositiveClick");
+        File deleteLocation = new File(taskDir + "/" + check);
+        if (deleteLocation.exists())
+            deleteLocation.delete();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        Fragment newInstance = recreateFragment(fragmentA);
+        ft.remove(fragmentA);
+        ft.add(R.id.activity_main, newInstance);
+        ft.commit();
+        fragmentA = (mainTaskView) newInstance;
+        //getSupportFragmentManager().beginTransaction().remove(fragmentA).commit();
+      //  getSupportFragmentManager().beginTransaction().add(R.id.activity_main, rec)
+
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialogFragment){
         Log.d("MainActivity", "NegativeClick");
         onFragmentChanged(1);
+    }
+
+    public void setFile(String string){
+        check = new File(string);
+    }
+
+    private Fragment recreateFragment(Fragment f)
+    {
+        try {
+            Fragment.SavedState savedState = getSupportFragmentManager().saveFragmentInstanceState(f);
+
+            Fragment newInstance = f.getClass().newInstance();
+            newInstance.setInitialSavedState(savedState);
+
+            return newInstance;
+        }
+        catch (Exception e) // InstantiationException, IllegalAccessException
+        {
+            throw new RuntimeException("Cannot reinstantiate fragment " + f.getClass().getName(), e);
+        }
+    }
+
+
+
+
+    @Override
+    public void onDialogYesClick(DialogFragment dialogFragment) {
+
+        overwrite.delete();
+    }
+
+    @Override
+    public void onDialogNoClick(DialogFragment dialogFragment) {
+        //Do nothing :0
     }
 }

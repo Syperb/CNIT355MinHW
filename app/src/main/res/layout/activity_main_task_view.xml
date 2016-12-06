@@ -69,6 +69,7 @@
             android:paddingBottom="60dp"
             android:layout_below="@+id/txtName">
 
+
         </ListView>
 
         <ImageView
