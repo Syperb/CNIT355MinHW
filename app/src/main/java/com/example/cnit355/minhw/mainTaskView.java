@@ -1,10 +1,12 @@
 package com.example.cnit355.minhw;
 
+import android.content.Context;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v4.app.DialogFragment;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,7 +38,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_main_task_view, container,
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_main_task_view, container,
                 false);
 
         ImageView btnNew = (ImageView) rootView.findViewById(R.id.btnNew);
@@ -59,14 +62,14 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
 
         //Declares mp3 list as an array of mp3s
-        ArrayList taskList = new ArrayList<String>();
+        final ArrayList taskList = new ArrayList<String>();
 
         //Creates a file array for storing file names
         File[] listFiles = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks").listFiles();
         String fileName, extName;
         try {
 
-            String date, hour, minute, progress, time;
+            String name, date, hour, minute, progress, time;
             InputStream in;
 
             for (File file : listFiles) {
@@ -75,7 +78,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
                 in = new FileInputStream(file);
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                reader.readLine();
+                name = reader.readLine();
                 reader.readLine();
                 date = reader.readLine();
                 hour = reader.readLine();
@@ -87,9 +90,8 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 //                    hour = (Integer.parseInt(hour) - 12)
 //                }
 
-                fileName = file.getName();
 
-                fileName = padRight(fileName, 20) + padRight(date + " at " + hour + ":" + minute, 30) + progress + "%";
+                fileName = padRight(name+":", 20) + date + " at " + hour + ":" + minute + "       " + progress + "%";
                 taskList.add(fileName);
             }
 
@@ -105,14 +107,17 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
 
         //Sets up list view for selection
-        ListView listViewMP3 = (ListView) rootView.findViewById(R.id.listViewTask);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        final ListView listViewMP3 = (ListView) rootView.findViewById(R.id.listViewTask);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_spinner_dropdown_item, taskList);
         listViewMP3.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         listViewMP3.setAdapter(adapter);
         listViewMP3.setItemChecked(0, true);
         listViewMP3.setDividerHeight(20);
         listViewMP3.setLongClickable(true);
+
+
+
 
 
 
@@ -125,21 +130,29 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
 
                 ConfirmDeleteDialogFragment dialogFragment = new ConfirmDeleteDialogFragment();
-                dialogFragment.show(getFragmentManager(), "DialogFragment");
+                dialogFragment.show(getFragmentManager(), "DialogFragment" );
+               // ((MainActivity)getActivity().setCheck());
+
+                String filename = taskList.get(pos).toString();
+
+                filename = filename.substring(0, filename.indexOf(":")).replaceAll("\\s","");
+                listener.setFile(filename);
+
+
+                adapter.notifyDataSetChanged();
+
 
                 return true;
 
             }
+
+
+
+
+
         });
 
-
-
-
-
-
         return rootView;
-
-
     }
 
     public static String padRight(String s, int n) {
@@ -159,9 +172,40 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
     @Override
     public void onDialogNegativeClick(DialogFragment dialogFragment){
         MainActivity activity = (MainActivity) getActivity();
+        Log.d("mainTaskView", "PositiveClick");
         activity.onFragmentChanged(1);
-        Log.d("MainActivity", "PositiveClick");
+
+
     }
+
+    public interface retrieveTaskListener{
+        public void setFile(String string);
+    }
+
+    retrieveTaskListener listener;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        try {
+            listener = (retrieveTaskListener) context;
+        } catch (ClassCastException castException){
+            throw new ClassCastException();
+        }
+    }
+
+    public void refresh(){
+        //FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //ft.detach(this).attach(this).commit();
+
+
+        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
+        fragTransaction.detach(this);
+        fragTransaction.attach(this);
+        fragTransaction.commit();
+
+    }
+
 
 
 }
