@@ -20,7 +20,13 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,12 +63,48 @@ public class MainActivity extends AppCompatActivity
         date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
         notifBuilder = new NotificationCompat.Builder(this);
         NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.InboxStyle inbox = new NotificationCompat.InboxStyle();
         int notificationID = 1;
 
         //Create Notification
         notifBuilder.setSmallIcon(R.drawable.calendar);
-        notifBuilder.setContentTitle("Notification from MinHW");
-        notifBuilder.setContentText("These assignments are due today:");
+        notifBuilder.setContentTitle("MinHW");
+        notifBuilder.setContentText("Assignments Due Today");
+        inbox.setBigContentTitle("Assignments:");
+
+        File[] listFiles = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + "/Tasks").listFiles();
+
+        try {
+
+            String name, date, hour, minute, progress, time;
+            InputStream in;
+
+            for (File file : listFiles) {
+                //Line 3: Date, Line 4: hour, Line 5: minute, Line 7: progress
+
+                in = new FileInputStream(file);
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                name = reader.readLine();
+                reader.readLine();
+                date = reader.readLine();
+                hour = reader.readLine();
+                minute = reader.readLine();
+
+                inbox.addLine(name + " is due " + date + " at " + hour + ":" + minute);
+                notifBuilder.setStyle(inbox);
+            }
+
+        }
+
+        catch (NullPointerException e) {
+            notifBuilder.setContentText("You have no Assignments Due Today.");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         //Send Notification
         notifManager.notify(notificationID, notifBuilder.build());
 
