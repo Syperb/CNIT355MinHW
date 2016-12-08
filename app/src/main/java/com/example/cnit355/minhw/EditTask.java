@@ -113,36 +113,36 @@ public class EditTask extends Fragment {
             in = new FileInputStream(file);
 
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            name = reader.readLine();
-            classed = reader.readLine();
-            date = reader.readLine();
-            hour = reader.readLine();
-            minute = reader.readLine();
-            desc = reader.readLine();
-            progress = reader.readLine();
-            completion = reader.readLine();
-
-            reader.close();
-
-//            txtTaskName.setText("");
-//            txtTaskClass.setText("");
-//            btnCalendar.setText("");
-//            timePicker.setHour(0);
-//            timePicker.setMinute(0);
-//            txtTaskDesc.setText("");
-//            seekBar.setProgress(0);
-//            editTaskComplete.setText("");
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+//            name = reader.readLine();
+//            classed = reader.readLine();
+//            date = reader.readLine();
+//            hour = reader.readLine();
+//            minute = reader.readLine();
+//            desc = reader.readLine();
+//            progress = reader.readLine();
+//            completion = reader.readLine();
 //
-            txtTaskName.setText(name);
-            txtTaskClass.setText(classed);
-            btnCalendar.setText(date);
-            timePicker.setHour(Integer.parseInt(hour));
-            timePicker.setMinute(Integer.parseInt(minute));
-            txtTaskDesc.setText(desc);
-            seekBar.setProgress(Integer.parseInt(progress));
-            editTaskComplete.setText(completion);
-            rootView.refreshDrawableState();
+//            reader.close();
+//
+////            txtTaskName.setText("");
+////            txtTaskClass.setText("");
+////            btnCalendar.setText("");
+////            timePicker.setHour(0);
+////            timePicker.setMinute(0);
+////            txtTaskDesc.setText("");
+////            seekBar.setProgress(0);
+////            editTaskComplete.setText("");
+////
+//            txtTaskName.setText(name);
+//            txtTaskClass.setText(classed);
+//            btnCalendar.setText(date);
+//            timePicker.setHour(Integer.parseInt(hour));
+//            timePicker.setMinute(Integer.parseInt(minute));
+//            txtTaskDesc.setText(desc);
+//            seekBar.setProgress(Integer.parseInt(progress));
+//            editTaskComplete.setText(completion);
+//            rootView.refreshDrawableState();
             }
         } catch (IOException ioe) {throw new Error(ioe);}
 
@@ -185,6 +185,7 @@ public class EditTask extends Fragment {
                     ((MainActivity)getActivity()).overwrite = editedTask;
 
                     ConfirmOverwriteDialogFragment dialogFragment = new ConfirmOverwriteDialogFragment();
+
                     dialogFragment.show(getFragmentManager(), "DialogFragment" );
                     //Toast.makeText(getContext(), "Task already exists", Toast.LENGTH_SHORT).show();
 
@@ -248,6 +249,7 @@ public class EditTask extends Fragment {
 
         return rootView;
     }
+
 
     public void clearAll(){
 

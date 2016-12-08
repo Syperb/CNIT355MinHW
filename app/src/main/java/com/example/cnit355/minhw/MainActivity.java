@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity
         try {
 
             String name, date, hour, minute, progress, time;
+            Integer timeInt;
+            Integer timeTotal = 0;
             InputStream in;
 
             for (File file : listFiles) {
@@ -90,11 +92,20 @@ public class MainActivity extends AppCompatActivity
                 date = reader.readLine();
                 hour = reader.readLine();
                 minute = reader.readLine();
+                reader.readLine();
+                time = reader.readLine();
 
                 inbox.addLine(name + " is due " + date + " at " + hour + ":" + minute);
-                notifBuilder.setStyle(inbox);
+
+                timeInt = parseHours(time);
+                timeTotal = timeTotal + timeInt;
+
             }
 
+            //Get Suggested number of hours worked per day from Settings
+            //Compare that number to the timeTotal
+            //Add onto the notification with a space and then the suggestion
+            notifBuilder.setStyle(inbox);
         }
 
         catch (NullPointerException e) {
@@ -177,7 +188,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
+    public Integer parseHours(String n){
+        Integer i = 0;
+        n = n.trim();
+        n = n.substring(0, 1);
+        n = n.trim();
+        try {
+            i = Integer.parseInt(n);
+            return i;
+        }
+        catch(NumberFormatException nfe){
+            Toast.makeText(getApplicationContext(), "You must enter a 1 or 2 digit number for Time to Completion", Toast.LENGTH_LONG).show();
+            return i;
+        }
+    }
 
 
     @Override
