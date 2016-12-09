@@ -1,0 +1,85 @@
+diff a/app/src/main/java/com/example/cnit355/minhw/EditTask.java b/app/src/main/java/com/example/cnit355/minhw/EditTask.java	(rejected hunks)
+@@ -106,45 +106,45 @@
+         editedTask = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + txtTaskName.getText().toString().replaceAll("\\s",""));
+         btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
+ 
+-        try {
+-        if (((MainActivity)getActivity()).check != null){
+-            check = ((MainActivity)getActivity()).check;
+-            File file = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + check);
+-            in = new FileInputStream(file);
+-
+-
+-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+-            name = reader.readLine();
+-            classed = reader.readLine();
+-            date = reader.readLine();
+-            hour = reader.readLine();
+-            minute = reader.readLine();
+-            desc = reader.readLine();
+-            progress = reader.readLine();
+-            completion = reader.readLine();
+-
+-            reader.close();
+-
+-//            txtTaskName.setText("");
+-//            txtTaskClass.setText("");
+-//            btnCalendar.setText("");
+-//            timePicker.setHour(0);
+-//            timePicker.setMinute(0);
+-//            txtTaskDesc.setText("");
+-//            seekBar.setProgress(0);
+-//            editTaskComplete.setText("");
++//        try {
++//        if (((MainActivity)getActivity()).check != null){
++//            check = ((MainActivity)getActivity()).check;
++//            File file = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + check);
++//            in = new FileInputStream(file);
+ //
+-            txtTaskName.setText(name);
+-            txtTaskClass.setText(classed);
+-            btnCalendar.setText(date);
+-            timePicker.setHour(Integer.parseInt(hour));
+-            timePicker.setMinute(Integer.parseInt(minute));
+-            txtTaskDesc.setText(desc);
+-            seekBar.setProgress(Integer.parseInt(progress));
+-            editTaskComplete.setText(completion);
+-            rootView.refreshDrawableState();
+-            }
+-        } catch (IOException ioe) {throw new Error(ioe);}
++//
++//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
++//            name = reader.readLine();
++//            classed = reader.readLine();
++//            date = reader.readLine();
++//            hour = reader.readLine();
++//            minute = reader.readLine();
++//            desc = reader.readLine();
++//            progress = reader.readLine();
++//            completion = reader.readLine();
++//
++//            reader.close();
++//
++////            txtTaskName.setText("");
++////            txtTaskClass.setText("");
++////            btnCalendar.setText("");
++////            timePicker.setHour(0);
++////            timePicker.setMinute(0);
++////            txtTaskDesc.setText("");
++////            seekBar.setProgress(0);
++////            editTaskComplete.setText("");
++////
++//            txtTaskName.setText(name);
++//            txtTaskClass.setText(classed);
++//            btnCalendar.setText(date);
++//            timePicker.setHour(Integer.parseInt(hour));
++//            timePicker.setMinute(Integer.parseInt(minute));
++//            txtTaskDesc.setText(desc);
++//            seekBar.setProgress(Integer.parseInt(progress));
++//            editTaskComplete.setText(completion);
++//            rootView.refreshDrawableState();
++//            }
++//        } catch (IOException ioe) {throw new Error(ioe);}
+ 
+         btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
+         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);

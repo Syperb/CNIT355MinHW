@@ -75,6 +75,10 @@ public class EditTask extends Fragment {
 
                 reader.close();
 
+                if (progress == null){
+                    progress = "0";
+                }
+
                 txtTaskName.setText(name);
                 txtTaskClass.setText(classed);
                 btnCalendar.setText(date);
@@ -106,45 +110,6 @@ public class EditTask extends Fragment {
         editedTask = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + txtTaskName.getText().toString().replaceAll("\\s",""));
         btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
 
-        try {
-        if (((MainActivity)getActivity()).check != null){
-            check = ((MainActivity)getActivity()).check;
-            File file = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/" + check);
-            in = new FileInputStream(file);
-
-
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//            name = reader.readLine();
-//            classed = reader.readLine();
-//            date = reader.readLine();
-//            hour = reader.readLine();
-//            minute = reader.readLine();
-//            desc = reader.readLine();
-//            progress = reader.readLine();
-//            completion = reader.readLine();
-//
-//            reader.close();
-//
-////            txtTaskName.setText("");
-////            txtTaskClass.setText("");
-////            btnCalendar.setText("");
-////            timePicker.setHour(0);
-////            timePicker.setMinute(0);
-////            txtTaskDesc.setText("");
-////            seekBar.setProgress(0);
-////            editTaskComplete.setText("");
-////
-//            txtTaskName.setText(name);
-//            txtTaskClass.setText(classed);
-//            btnCalendar.setText(date);
-//            timePicker.setHour(Integer.parseInt(hour));
-//            timePicker.setMinute(Integer.parseInt(minute));
-//            txtTaskDesc.setText(desc);
-//            seekBar.setProgress(Integer.parseInt(progress));
-//            editTaskComplete.setText(completion);
-//            rootView.refreshDrawableState();
-            }
-        } catch (IOException ioe) {throw new Error(ioe);}
 
         btnCalendar = (Button) rootView.findViewById(R.id.btnCalendar);
         ImageView btnBack = (ImageView) rootView.findViewById(R.id.btnBack);
@@ -183,33 +148,40 @@ public class EditTask extends Fragment {
                 if (editedTask.exists()){
                     //create dialog to ask user if they want to overwrite
                     ((MainActivity)getActivity()).overwrite = editedTask;
+                    ((MainActivity)getActivity()).Info = (txtTaskName.getText().toString() + "\n"
+                            + txtTaskClass.getText().toString() + "\n"
+                            + btnCalendar.getText().toString() + "\n"
+                            + timePicker.getHour() + "\n"
+                            + timePicker.getMinute() + "\n"
+                            + txtTaskDesc.getText().toString() + "\n"
+                            + seekBar.getProgress() + "\n"
+                            + editTaskComplete.getText().toString());
 
                     ConfirmOverwriteDialogFragment dialogFragment = new ConfirmOverwriteDialogFragment();
-
                     dialogFragment.show(getFragmentManager(), "DialogFragment" );
                     //Toast.makeText(getContext(), "Task already exists", Toast.LENGTH_SHORT).show();
 
-                    try {
-                        FileWriter writer = new FileWriter(editedTask);
-                        writer.append(
-                                txtTaskName.getText().toString() + "\n"
-                                        + txtTaskClass.getText().toString() + "\n"
-                                        + btnCalendar.getText().toString() + "\n"
-                                        + timePicker.getHour() + "\n"
-                                        + timePicker.getMinute() + "\n"
-                                        + txtTaskDesc.getText().toString() + "\n"
-                                        + seekBar.getProgress() + "\n"
-                                        + editTaskComplete.getText().toString()
+//                    try {
+//                        FileWriter writer = new FileWriter(editedTask);
+//                        writer.append(
+//                                txtTaskName.getText().toString() + "\n"
+//                                        + txtTaskClass.getText().toString() + "\n"
+//                                        + btnCalendar.getText().toString() + "\n"
+//                                        + timePicker.getHour() + "\n"
+//                                        + timePicker.getMinute() + "\n"
+//                                        + txtTaskDesc.getText().toString() + "\n"
+//                                        + seekBar.getProgress() + "\n"
+//                                        + editTaskComplete.getText().toString()
+//
+//
+//                        );
 
-
-                        );
-
-                        writer.close();
+                        //writer.close();
                         //OutputStreamWriter outFs = new OutputStreamWriter(getActivity().openFileOutput(txtTaskName.getText().toString(), MODE_PRIVATE));
                         //outFs.write();
                         //outFs.close();
 
-                    } catch (IOException e) {throw new Error(e);}
+                 //   } catch (IOException e) {throw new Error(e);}
                 }
                 else{
                     try {
@@ -249,7 +221,6 @@ public class EditTask extends Fragment {
 
         return rootView;
     }
-
 
     public void clearAll(){
 

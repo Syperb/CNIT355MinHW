@@ -66,7 +66,6 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
         //Creates a file array for storing file names
         File[] listFiles = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks").listFiles();
-        Toast.makeText(getContext(), rootView.getContext().getFilesDir().getAbsolutePath().toString() + "/Tasks", Toast.LENGTH_LONG).show();
         String fileName, extName;
         try {
 

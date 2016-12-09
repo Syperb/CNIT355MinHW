@@ -1,8 +1,5 @@
 package com.example.cnit355.minhw;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Environment;
@@ -12,7 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +16,9 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,9 +35,9 @@ public class MainActivity extends AppCompatActivity
     DatePickerFragment fragmentD;
     String dateString;
     SimpleDateFormat date;
-    NotificationCompat.Builder notifBuilder;
     File check;
     File overwrite;
+    String Info;
     FragmentManager mFragmentManager;
 
 
@@ -54,73 +46,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Data Definition
         fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
         fragmentD = new DatePickerFragment();
         taskName = (TextView) findViewById(R.id.txtName);
         date = new SimpleDateFormat("EEEE, MMM dd, yyyy");
-        notifBuilder = new NotificationCompat.Builder(this);
-        NotificationManager notifManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.InboxStyle inbox = new NotificationCompat.InboxStyle();
-        int notificationID = 1;
 
-        //Create Notification
-        notifBuilder.setSmallIcon(R.drawable.calendar);
-        notifBuilder.setContentTitle("MinHW");
-        notifBuilder.setContentText("Assignments Due Today");
-        inbox.setBigContentTitle("Assignments:");
 
-        File[] listFiles = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + "/Tasks").listFiles();
-
-        try {
-
-            String name, date, hour, minute, progress, time;
-            Integer timeInt;
-            Integer timeTotal = 0;
-            InputStream in;
-
-            for (File file : listFiles) {
-                //Line 3: Date, Line 4: hour, Line 5: minute, Line 7: progress
-
-                in = new FileInputStream(file);
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                name = reader.readLine();
-                reader.readLine();
-                date = reader.readLine();
-                hour = reader.readLine();
-                minute = reader.readLine();
-                reader.readLine();
-                time = reader.readLine();
-
-                inbox.addLine(name + " is due " + date + " at " + hour + ":" + minute);
-
-                timeInt = parseHours(time);
-                timeTotal = timeTotal + timeInt;
-
-            }
-
-            //Get Suggested number of hours worked per day from Settings
-            //Compare that number to the timeTotal
-            //Add onto the notification with a space and then the suggestion
-            notifBuilder.setStyle(inbox);
-        }
-
-        catch (NullPointerException e) {
-            notifBuilder.setContentText("You have no Assignments Due Today.");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        //Send Notification
-        notifManager.notify(notificationID, notifBuilder.build());
 
         //tries to make a directory to store files in
         taskDir = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + taskDir);
+
 
         try {
             if (!taskDir.exists())
@@ -188,20 +125,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public Integer parseHours(String n){
-        Integer i = 0;
-        n = n.trim();
-        n = n.substring(0, 1);
-        n = n.trim();
-        try {
-            i = Integer.parseInt(n);
-            return i;
-        }
-        catch(NumberFormatException nfe){
-            Toast.makeText(getApplicationContext(), "You must enter a 1 or 2 digit number for Time to Completion", Toast.LENGTH_LONG).show();
-            return i;
-        }
-    }
+
 
 
     @Override
@@ -209,6 +133,22 @@ public class MainActivity extends AppCompatActivity
 
         overwrite.delete();
         check = null;
+
+        try {
+            FileWriter writer = new FileWriter(overwrite);
+            writer.append(Info);
+            writer.close();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+            Fragment newInstance = recreateFragment(fragmentA);
+            ft.remove(fragmentA);
+            ft.add(R.id.activity_main, newInstance);
+            ft.commit();
+            fragmentA = (mainTaskView) newInstance;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
