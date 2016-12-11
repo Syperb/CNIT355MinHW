@@ -13,29 +13,68 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.NumberFormat;
 
 public class activity_settings extends Fragment {
 
+    ViewGroup rootView;
     File settings;
     EditText hoursWorked;
     Switch swNotif;
     Switch swSugg;
+    InputStream in;
+    String hours, swNotifText, swSuggText;
 
     @Override
     public void onResume() {
         super.onResume();
 
+        MainActivity activity = (MainActivity) getActivity();
+
+        try {
+            if (settings != null){
+                File file = new File(activity.getFilesDir().getAbsolutePath() + "/Settings");
+                in = new FileInputStream(file);
+
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                hours = reader.readLine();
+                swNotifText = reader.readLine();
+                swSuggText = reader.readLine();
+
+                reader.close();
+
+                hoursWorked.setText(hours);
+                if (swNotifText.equals("true")){
+                    swNotif.setChecked(true);
+                    swSugg.setClickable(true);
+                    swSugg.setBackgroundColor(0);
+                } else {
+                    swNotif.setChecked(false);
+                    swSugg.setClickable(false);
+                }
+                if (swSuggText.equals("true")){
+                    swSugg.setChecked(true);
+                    swSugg.setBackgroundColor(0);
+                } else {
+                    swSugg.setChecked(false);
+                }
+            }
+        } catch (IOException ioe) {ioe.printStackTrace();}
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_settings, container,
+        rootView = (ViewGroup) inflater.inflate(R.layout.activity_settings, container,
                 false);
         swNotif = (Switch) rootView.findViewById(R.id.swNotifications);
         swSugg = (Switch) rootView.findViewById(R.id.swHomework);
@@ -57,15 +96,15 @@ public class activity_settings extends Fragment {
             public void onClick(View v) {
 
                 MainActivity activity = (MainActivity) getActivity();
-
+                settings = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Settings");
                 if (settings.exists()) {
                     settings.delete();
                     try{
                         FileWriter writer = new FileWriter(settings);
                         writer.append(
                                 parseHours(hoursWorked.getText().toString()) + "\n"
-                                + swNotif.getText().toString() + "\n"
-                                + swSugg.getText().toString()
+                                + switchText(swNotif) + "\n"
+                                + switchText(swSugg)
                         );
                         writer.close();
 
@@ -76,8 +115,8 @@ public class activity_settings extends Fragment {
                         FileWriter writer = new FileWriter(settings);
                         writer.append(
                                 parseHours(hoursWorked.getText().toString()) + "\n"
-                                        + swNotif.getText().toString() + "\n"
-                                        + swSugg.getText().toString()
+                                        + switchText(swNotif) + "\n"
+                                        + switchText(swSugg)
                         );
                         writer.close();
 
@@ -96,31 +135,24 @@ public class activity_settings extends Fragment {
                 if (swNotif.isChecked()){
                     swSugg.setClickable(true);
                     swSugg.setBackgroundColor(0);
-                    swNotif.setText("true");
-                    swNotif.setShowText(false);
                 } else{
                     swSugg.setClickable(false);
                     swSugg.setChecked(false);
                     swSugg.setBackgroundColor(getResources().getColor(R.color.grayedOut));
-                    swNotif.setText("false");
-                    swNotif.setShowText(false);
                 }
             }
         });
 
         //OnCLickListener for the Homework Suggestion Switch
-        settings = new File(rootView.getContext().getFilesDir().getAbsolutePath() + "/Tasks/Settings");
         hoursWorked = (EditText) rootView.findViewById(R.id.txtHPD);
         swSugg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (swSugg.isChecked()){
-                    swSugg.setText("true");
-                    swSugg.setShowText(false);
-                } else{
-                    swSugg.setText("false");
-                    swSugg.setShowText(true);
-                }
+//                if (swSugg.isChecked()){
+//
+//                } else{
+//
+//                }
             }
         });
 
@@ -140,6 +172,14 @@ public class activity_settings extends Fragment {
         catch(NumberFormatException nfe){
             Toast.makeText(getContext(), "You must a 1 or 2 digit number for Homework Per Day", Toast.LENGTH_LONG);
             return n;
+        }
+    }
+
+    public String switchText(Switch sw){
+        if (sw.isChecked()){
+            return "true";
+        } else {
+            return "false";
         }
     }
 }
