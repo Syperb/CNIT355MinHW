@@ -42,37 +42,35 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnBack"
-        android:background="@android:color/white">
+        android:layout_above="@+id/btnBack">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:text="Homework Per Day:"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textSize="16sp"
-                android:id="@+id/txtHomework" />
+                android:id="@+id/txtHomework"
+                android:layout_height="60dp" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editName"
                 android:textSize="16sp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:id="@+id/txtHPD" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:text="Push Notifications:"
@@ -84,102 +82,16 @@
 
             <Switch
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingRight="20sp"
-                android:id="@+id/swNotifications" />
+                android:id="@+id/swNotifications"
+                android:layout_height="60dp" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:text="Assignment Reminders"
-                android:id="@+id/txtAssignmentRem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:paddingLeft="20sp"
-                android:textStyle="normal|bold" />
-            </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:text="Daily"
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:paddingLeft="20sp" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingRight="20sp"
-                android:id="@+id/swDaily" />
-
-        </TableRow>
-
-        <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:text="Hours Before Due:"
-            android:id="@+id/txtHoursBeforeDue"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="16sp"
-            android:paddingLeft="20sp" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingRight="20sp"
-                android:id="@+id/swHoursBefore" />
-
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:text="# of Hours:"
-                android:id="@+id/txtHours"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:paddingLeft="40sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editHours"
-                android:textSize="16sp"
-                android:layout_weight="1" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:text="Homework Suggestions:"
@@ -187,15 +99,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:paddingLeft="20sp" />
+                android:textSize="16sp" />
 
             <Switch
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:paddingRight="20sp"
-                android:id="@+id/swHomework" />
+                android:id="@+id/swHomework"
+                android:background="@color/grayedOut"
+                android:checked="false"
+                android:clickable="false" />
 
         </TableRow>
 
