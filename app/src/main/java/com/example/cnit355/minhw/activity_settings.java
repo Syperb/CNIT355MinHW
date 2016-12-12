@@ -39,7 +39,7 @@ public class activity_settings extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
 
         try {
-            if (settings != null){
+            try {
                 File file = new File(activity.getFilesDir().getAbsolutePath() + "/Settings");
                 in = new FileInputStream(file);
 
@@ -52,7 +52,7 @@ public class activity_settings extends Fragment {
                 reader.close();
 
                 hoursWorked.setText(hours);
-                if (swNotifText.equals("true")){
+                if (swNotifText.equals("true")) {
                     swNotif.setChecked(true);
                     swSugg.setClickable(true);
                     swSugg.setBackgroundColor(0);
@@ -60,14 +60,16 @@ public class activity_settings extends Fragment {
                     swNotif.setChecked(false);
                     swSugg.setClickable(false);
                 }
-                if (swSuggText.equals("true")){
+                if (swSuggText.equals("true")) {
                     swSugg.setChecked(true);
                     swSugg.setBackgroundColor(0);
                 } else {
                     swSugg.setChecked(false);
                 }
-            }
-        } catch (IOException ioe) {ioe.printStackTrace();}
+            } catch (IOException e){e.printStackTrace();}
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
