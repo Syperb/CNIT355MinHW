@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -104,10 +105,13 @@ public class MainActivity extends AppCompatActivity
 
                 inbox.addLine(name + " is due " + date + " at " + hour + ":" + minute);
 
-//                Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("EST"), Locale.US);
-//                calendarDate.set(calendarDate.YEAR, calendarDate.MONTH, calendarDate.DAY_OF_WEEK + 7);
-//                Date currentDate = calendarDate.getTime();
-//                dateString = dateFormat.format(currentDate);
+
+               // Calendar upweek = new GregorianCalendar();
+                //upweek.add(Calendar.DATE, 7);
+                Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("EST"), Locale.US);
+                calendarDate.set(calendarDate.YEAR, calendarDate.MONTH, calendarDate.DATE + 7);
+                Date currentDate = calendarDate.getTime();
+                dateString = dateFormat.format(currentDate);
 
 //                This is meant to grab the current date and add 7 days to it.
 //                Then we will be able to compare the date of the assignment and see if it is within the current week

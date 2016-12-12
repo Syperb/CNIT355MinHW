@@ -90,7 +90,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 //                    hour = (Integer.parseInt(hour) - 12)
 //                }
 
-                fileName = padRight(name+":", 20) + date + " at " + hour + ":" + minute + padRight(" ", 18) + progress + "%";
+                fileName = padRight(name+":", 20) + date + " at " + hour + ":" + minute + padRight(" ", 12) + progress + "%";
                 taskList.add(fileName);
             }
 
