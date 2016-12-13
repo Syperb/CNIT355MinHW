@@ -36,25 +36,25 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
-                            implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener,
-                            mainTaskView.retrieveTaskListener,
-                            ConfirmOverwriteDialogFragment.ConfirmOverwriteDialogListener{
+        implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener,
+        mainTaskView.retrieveTaskListener,
+        ConfirmOverwriteDialogFragment.ConfirmOverwriteDialogListener {
 
+    //Fragment and view declarations
     mainTaskView fragmentA;
     EditTask fragmentB;
     activity_settings fragmentC;
-    File taskDir = new File("/Tasks");
     TextView taskName;
     DatePickerFragment fragmentD;
     String dateString, todayString;
     SimpleDateFormat dateFormat;
-    File check;
-    File overwrite;
-    String Info;
     FragmentManager mFragmentManager;
     NotificationCompat.Builder notifBuilder;
     NotificationManager notifManager;
 
+    // Variable declarations
+    String Info;
+    File check, overwrite, taskDir = new File("/Tasks");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,11 +123,11 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     //Only adding those assignments Due today to the Notification
-                    if (dateFormat.parse(date).equals(dateFormat.parse(todayString))){
+                    if (dateFormat.parse(date).equals(dateFormat.parse(todayString))) {
                         inbox.addLine(name + " is due today at " + hour + ":" + minute);
                         i++;
                     }
-                } catch (ParseException e){
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -153,17 +153,17 @@ public class MainActivity extends AppCompatActivity
 
             notifBuilder.setStyle(inbox);
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             notifBuilder.setContentText("You have no Assignments Due Today.");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         //Send Notification if settings allows it
-        if (swNotifText.equals("true")){
+        if (swNotifText.equals("true")) {
             notifManager.notify(notificationID, notifBuilder.build());
         }
 
@@ -174,11 +174,14 @@ public class MainActivity extends AppCompatActivity
         try {
             if (!taskDir.exists())
                 taskDir.mkdir();
-        } catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //Toast.makeText(this, this.getApplicationContext().getFilesDir().getAbsolutePath(), Toast.LENGTH_SHORT).show();
     }
 
+    // Fragment changing method
     public void onFragmentChanged(int index) {
         if (index == 0) {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentA, "MainTaskView").commit();
@@ -186,43 +189,45 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentB, "EditTask").commit();
         } else if (index == 2) {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentC, "Settings").commit();
-        } else if (index == 3){
+        } else if (index == 3) {
             getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragmentD, "DatePicker").commit();
         }
     }
 
+    // Method to catch user confirm finish task, deletes file
     @Override
-    public void onDialogPositiveClick(DialogFragment dialogFragment){
+    public void onDialogPositiveClick(DialogFragment dialogFragment) {
 
-        Log.d("MainActivity", "PositiveClick");
+        // Determines if file exists, if so deletes
         File deleteLocation = new File(taskDir + "/" + check);
         if (deleteLocation.exists())
             deleteLocation.delete();
 
+        // Creates a new fragment transaction to refresh fragment after task delete
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
+        // Creates a new fragmentA, removes the old one, adds the new one, commits teh transaction, establishes fragmentA as a mainTaskView
         Fragment newInstance = recreateFragment(fragmentA);
         ft.remove(fragmentA);
         ft.add(R.id.activity_main, newInstance);
         ft.commit();
         fragmentA = (mainTaskView) newInstance;
-        //getSupportFragmentManager().beginTransaction().remove(fragmentA).commit();
-      //  getSupportFragmentManager().beginTransaction().add(R.id.activity_main, rec)
-
     }
 
+    // Method to catch user edit task, sends to EditTask fragment
     @Override
-    public void onDialogNegativeClick(DialogFragment dialogFragment){
+    public void onDialogNegativeClick(DialogFragment dialogFragment) {
         Log.d("MainActivity", "NegativeClick");
         onFragmentChanged(1);
     }
 
-    public void setFile(String string){
+    // Gets clicked file name from mainTaskView
+    public void setFile(String string) {
         check = new File(string);
     }
 
-    private Fragment recreateFragment(Fragment f)
-    {
+    // Method called to create a new fragment
+    private Fragment recreateFragment(Fragment f) {
         try {
             Fragment.SavedState savedState = getSupportFragmentManager().saveFragmentInstanceState(f);
 
@@ -230,22 +235,22 @@ public class MainActivity extends AppCompatActivity
             newInstance.setInitialSavedState(savedState);
 
             return newInstance;
-        }
-        catch (Exception e) // InstantiationException, IllegalAccessException
+        } catch (Exception e) // InstantiationException, IllegalAccessException
         {
             throw new RuntimeException("Cannot reinstantiate fragment " + f.getClass().getName(), e);
         }
     }
 
 
-
-
+    // Method to handle user confirm overwrite form EditTask fragment
     @Override
     public void onDialogYesClick(DialogFragment dialogFragment) {
 
+        // Deletes file, sets sets clicked file to finished state
         overwrite.delete();
         check = null;
 
+        // Creates new file
         try {
             FileWriter writer = new FileWriter(overwrite);
             writer.append(Info);
@@ -263,6 +268,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // Method to handle user stop overwrite, does nothing
     @Override
     public void onDialogNoClick(DialogFragment dialogFragment) {
         //Do nothing :0

@@ -34,7 +34,7 @@ public class DatePickerFragment extends Fragment {
                 false);
 
         editTask = new EditTask();
-        realDate = (CalendarView)rootView.findViewById(R.id.calendarView);
+        realDate = (CalendarView) rootView.findViewById(R.id.calendarView);
         Log.d("DatePicker", "Inside datepicker onCreateView method");
 
         //onCLick method for Back Button
@@ -61,7 +61,7 @@ public class DatePickerFragment extends Fragment {
         });
 
         return rootView;
-        }
+    }
 
 
 }

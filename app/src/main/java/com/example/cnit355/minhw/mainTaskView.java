@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import static java.lang.System.in;
 
-public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener{
+public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragment.ConfirmDeleteDialogListener {
     @Nullable
     @Override
 
@@ -41,6 +41,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
         final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.activity_main_task_view, container,
                 false);
 
+        // New button to take user to EditTask fragment, and Settings button to take user to settings fragment
         ImageView btnNew = (ImageView) rootView.findViewById(R.id.btnNew);
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,6 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
         });
 
 
-
         //Declares mp3 list as an array of mp3s
         final ArrayList taskList = new ArrayList<String>();
 
@@ -72,8 +72,9 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
             String name, date, hour, minute, progress, time;
             InputStream in;
 
+            //Reads every task files information and adds it to the ArrayList
             for (File file : listFiles) {
-                //Line 3: Date, Line 4: hour, Line 5: minute, Line 7: progress
+
 
                 in = new FileInputStream(file);
 
@@ -86,23 +87,18 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
                 reader.readLine();
                 progress = reader.readLine();
 
-//                if (Integer.parseInt(hour) > 12){
-//                    hour = (Integer.parseInt(hour) - 12)
-//                }
 
-                fileName = padRight(name+":", 20) + date + " at " + hour + ":" + minute + padRight(" ", 12) + progress + "%";
+                fileName = padRight(name + ":", 20) + date + " at " + hour + ":" + minute + padRight(" ", 10) + progress + "%";
                 taskList.add(fileName);
             }
 
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Toast.makeText(getContext(), "No tasks? Should probably add some.", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
 
         //Sets up list view for selection
@@ -116,25 +112,20 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
         listViewMP3.setLongClickable(true);
 
 
-
-
-
-
-
-
-        listViewMP3.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        //Task list onLongClick Listener to ask user whether they want to finish task or edit task through a dialog
+        listViewMP3.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
 
 
                 ConfirmDeleteDialogFragment dialogFragment = new ConfirmDeleteDialogFragment();
-                dialogFragment.show(getFragmentManager(), "DialogFragment" );
-               // ((MainActivity)getActivity().setCheck());
+                dialogFragment.show(getFragmentManager(), "DialogFragment");
+                // ((MainActivity)getActivity().setCheck());
 
                 String filename = taskList.get(pos).toString();
 
-                filename = filename.substring(0, filename.indexOf(":")).replaceAll("\\s","");
+                filename = filename.substring(0, filename.indexOf(":")).replaceAll("\\s", "");
                 listener.setFile(filename);
 
 
@@ -146,66 +137,42 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
             }
 
 
-
-
-
         });
 
         return rootView;
     }
 
+    // Padding method to pad strings before placement in ListView
     public static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s);
     }
 
-    public static String padLeft(String s, int n) {
-        return String.format("%1$" + n + "s", s);
-    }
 
-
+    // Methods required by interface
     @Override
-    public void onDialogPositiveClick(DialogFragment dialogFragment){
-
+    public void onDialogPositiveClick(DialogFragment dialogFragment) {
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialogFragment){
-        MainActivity activity = (MainActivity) getActivity();
-        Log.d("mainTaskView", "PositiveClick");
-        activity.onFragmentChanged(1);
-
-
+    public void onDialogNegativeClick(DialogFragment dialogFragment) {
     }
 
-    public interface retrieveTaskListener{
+    //Creates interface for giving main task file names
+    public interface retrieveTaskListener {
         public void setFile(String string);
     }
 
     retrieveTaskListener listener;
 
+    //Makes sure listener attaches to main activity
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
         try {
             listener = (retrieveTaskListener) context;
-        } catch (ClassCastException castException){
+        } catch (ClassCastException castException) {
             throw new ClassCastException();
         }
     }
-
-    public void refresh(){
-        //FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //ft.detach(this).attach(this).commit();
-
-
-        FragmentTransaction fragTransaction = getFragmentManager().beginTransaction();
-        fragTransaction.detach(this);
-        fragTransaction.attach(this);
-        fragTransaction.commit();
-
-    }
-
-
-
 }
 

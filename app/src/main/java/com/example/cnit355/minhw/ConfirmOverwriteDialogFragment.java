@@ -12,9 +12,10 @@ import android.util.Log;
  * Created by Brad on 12/5/2016.
  */
 
-public class ConfirmOverwriteDialogFragment extends DialogFragment{
+public class ConfirmOverwriteDialogFragment extends DialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    // Creates dialog to ask for user to confirm whether to overwrite a file
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Overwrite file?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -35,8 +36,9 @@ public class ConfirmOverwriteDialogFragment extends DialogFragment{
     }
 
     public interface ConfirmOverwriteDialogListener {
-        public void onDialogYesClick(DialogFragment dialogFragment);
-        public void onDialogNoClick(DialogFragment dialog);
+        void onDialogYesClick(DialogFragment dialogFragment);
+
+        void onDialogNoClick(DialogFragment dialog);
     }
 
     ConfirmOverwriteDialogFragment.ConfirmOverwriteDialogListener mListener;

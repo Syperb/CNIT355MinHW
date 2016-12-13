@@ -14,9 +14,10 @@ import android.util.Log;
  * Created by Brad on 12/5/2016.
  */
 
-public class ConfirmDeleteDialogFragment extends DialogFragment{
+public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    //Creates dialog fragment to ask for user input on editing or finishing clicked task
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Would you like to finish or edit this task?")
                 .setPositiveButton("Finish", new DialogInterface.OnClickListener() {
@@ -36,13 +37,16 @@ public class ConfirmDeleteDialogFragment extends DialogFragment{
         return builder.create();
     }
 
+    // Interface for MainActivity to use to receive user input
     public interface ConfirmDeleteDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogPositiveClick(DialogFragment dialog);
+
+        void onDialogNegativeClick(DialogFragment dialog);
     }
 
     ConfirmDeleteDialogListener mListener;
 
+    //Makes sure listener attaches to main activity
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
