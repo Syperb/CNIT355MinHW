@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     File taskDir = new File("/Tasks");
     TextView taskName;
     DatePickerFragment fragmentD;
-    String dateString;
+    String dateString, todayString;
     SimpleDateFormat dateFormat;
     File check;
     File overwrite;
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Fragment and Data Definition
         fragmentA = (mainTaskView) getSupportFragmentManager().findFragmentById(R.id.MainFragment);
         fragmentB = new EditTask();
         fragmentC = new activity_settings();
@@ -75,19 +76,23 @@ public class MainActivity extends AppCompatActivity
         //Create Notification
         notifBuilder.setSmallIcon(R.drawable.calendar);
         notifBuilder.setContentTitle("MinHW");
-        notifBuilder.setContentText("Assignments Due Today");
-        inbox.setBigContentTitle("Assignments:");
+        notifBuilder.setContentText("Assignments Due");
+        inbox.setBigContentTitle("Assignments Due Today:");
 
-
+        //Create files to read from
         File[] listFiles = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + "/Tasks").listFiles();
         File settingsFile = new File(this.getApplication().getFilesDir().getAbsolutePath() + "/Settings");
+
+        //Two String values for reading from the Settings file
         String swNotifText = "true";
         String swSuggText = "true";
 
         try {
+            //Variables for reading from the Task Files
             String name, date, hour, minute, progress, time;
-            Integer timeInt;
-            Integer timeTotal = 0;
+            Double timeInt;
+            Double timeTotal = 0.0;
+            Integer i = 0;
             InputStream in, in2;
 
             for (File file : listFiles) {
@@ -100,30 +105,27 @@ public class MainActivity extends AppCompatActivity
                 hour = reader.readLine();
                 minute = reader.readLine();
                 reader.readLine();
-                reader.readLine();
+                progress = reader.readLine();
                 time = reader.readLine();
 
-                inbox.addLine(name + " is due " + date + " at " + hour + ":" + minute);
-
-
-               // Calendar upweek = new GregorianCalendar();
-                //upweek.add(Calendar.DATE, 7);
+                //Define Todays Date and increment it by a week for the Notification
                 Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("EST"), Locale.US);
-                calendarDate.set(calendarDate.YEAR, calendarDate.MONTH, calendarDate.DATE + 7);
-                Date currentDate = calendarDate.getTime();
-                dateString = dateFormat.format(currentDate);
-
-//                This is meant to grab the current date and add 7 days to it.
-//                Then we will be able to compare the date of the assignment and see if it is within the current week
-//                Can you try to figure out how to get the current date and add a week to it?
-
-
-
+                calendarDate.setTime(new Date());
+                todayString = dateFormat.format(calendarDate.getTime());
+                calendarDate.add(Calendar.DATE, 7);
+                dateString = dateFormat.format(calendarDate.getTime());
 
                 try {
+                    //Adding up total hours to work based upon if they are Due within a week
                     if (dateFormat.parse(date).before(dateFormat.parse(dateString))) {
-                        timeInt = Integer.parseInt(time);
+                        timeInt = (Double.parseDouble(time)) * (1 - (Double.parseDouble(progress) / 100));
                         timeTotal = timeTotal + timeInt;
+                    }
+
+                    //Only adding those assignments Due today to the Notification
+                    if (dateFormat.parse(date).equals(dateFormat.parse(todayString))){
+                        inbox.addLine(name + " is due today at " + hour + ":" + minute);
+                        i++;
                     }
                 } catch (ParseException e){
                     e.printStackTrace();
@@ -131,21 +133,22 @@ public class MainActivity extends AppCompatActivity
             }
 
             String hours;
-            Integer hoursInt, suggTime;
+            Double hoursInt, suggTime;
             in2 = new FileInputStream(settingsFile);
             BufferedReader newreader = new BufferedReader(new InputStreamReader(in2));
             hours = newreader.readLine();
             swNotifText = newreader.readLine();
             swSuggText = newreader.readLine();
 
-            hoursInt = Integer.parseInt(hours);
-            suggTime = timeTotal / hoursInt;
+            hoursInt = Double.parseDouble(hours);
+            suggTime = timeTotal / 7;
+            inbox.setSummaryText("You have " + Integer.toString(i) + " Assignments Due Today");
 
-            if (((hoursInt * 7) > timeTotal) && swSuggText == "true"){
-                inbox.addLine("");
-                inbox.addLine("You have " + Integer.toString(timeTotal) + " hours of homework due in the next week and you " +
-                        "only want to work for " + Integer.toString((hoursInt * 7)) + " total hours this week." +
-                        "I suggest you work " + Integer.toString(suggTime) + " hours per day for the rest of the week.");
+            if (((hoursInt * 7) < timeTotal) && swSuggText.equals("true")) {
+                inbox.addLine(" ");
+                inbox.addLine("You have " + Double.toString(Math.round(timeTotal)) + " hours of homework due in the next week.");
+                inbox.addLine("You only want to work for " + Double.toString(Math.round(hoursInt * 7)) + " total hours this week.");
+                inbox.addLine("I suggest you work " + Double.toString(Math.round(suggTime)) + " hours per day for a week to catch up.");
             }
 
             notifBuilder.setStyle(inbox);
