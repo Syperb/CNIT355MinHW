@@ -61,7 +61,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
         });
 
 
-        //Declares mp3 list as an array of mp3s
+        //Declares ArrayList as an array of Strings
         final ArrayList taskList = new ArrayList<String>();
 
         //Creates a file array for storing file names

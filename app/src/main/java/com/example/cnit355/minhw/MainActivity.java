@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity
             for (File file : listFiles) {
                 in = new FileInputStream(file);
 
+                //Read from Task Files
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 name = reader.readLine();
                 reader.readLine();
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
 
+            //Reading the Settings File
             String hours;
             Double hoursInt, suggTime;
             in2 = new FileInputStream(settingsFile);
@@ -139,11 +141,14 @@ public class MainActivity extends AppCompatActivity
             hours = newreader.readLine();
             swNotifText = newreader.readLine();
             swSuggText = newreader.readLine();
-
             hoursInt = Double.parseDouble(hours);
+
+            //suggTime used for the suggestion feature to suggest amount of time to work on assignments each day
             suggTime = timeTotal / 7;
             inbox.setSummaryText("You have " + Integer.toString(i) + " Assignments Due Today");
 
+            //Add Suggestion to the Notification if settings allow it and it is necessary
+            //Meaning that the total amount of work left in the week is greater than the total amount of work they want to work
             if (((hoursInt * 7) < timeTotal) && swSuggText.equals("true")) {
                 inbox.addLine(" ");
                 inbox.addLine("You have " + Double.toString(Math.round(timeTotal)) + " hours of homework due in the next week.");
@@ -151,6 +156,7 @@ public class MainActivity extends AppCompatActivity
                 inbox.addLine("I suggest you work " + Double.toString(Math.round(suggTime)) + " hours per day for a week to catch up.");
             }
 
+            //Build the Notification
             notifBuilder.setStyle(inbox);
 
         } catch (NullPointerException e) {
@@ -161,7 +167,6 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-
         //Send Notification if settings allows it
         if (swNotifText.equals("true")) {
             notifManager.notify(notificationID, notifBuilder.build());
@@ -169,8 +174,6 @@ public class MainActivity extends AppCompatActivity
 
         //tries to make a directory to store files in
         taskDir = new File(this.getApplicationContext().getFilesDir().getAbsolutePath() + taskDir);
-
-
         try {
             if (!taskDir.exists())
                 taskDir.mkdir();
