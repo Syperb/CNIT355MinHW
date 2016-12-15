@@ -94,14 +94,14 @@ public class EditTask extends Fragment {
                 editTaskComplete.setText(completion);
             } else {
                 // Sets EditTask to blank if no file is selected for editing
-                txtTaskName.setText("");
-                txtTaskClass.setText("");
-                btnCalendar.setText("Select Date");
-                timePicker.setHour(12);
-                timePicker.setMinute(0);
-                txtTaskDesc.setText("");
-                seekBar.setProgress(0);
-                editTaskComplete.setText("");
+//                txtTaskName.setText("");
+//                txtTaskClass.setText("");
+//                btnCalendar.setText("Select Date");
+//                timePicker.setHour(12);
+//                timePicker.setMinute(0);
+//                txtTaskDesc.setText("");
+//                seekBar.setProgress(0);
+//                editTaskComplete.setText("");
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();

@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity
 
     // Gets clicked file name from mainTaskView
     public void setFile(String string) {
-        check = new File(string);
+        check = new File(string.substring(0, string.indexOf("`")));
     }
 
     // Method called to create a new fragment

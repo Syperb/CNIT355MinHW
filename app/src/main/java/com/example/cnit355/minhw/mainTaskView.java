@@ -88,7 +88,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
                 progress = reader.readLine();
 
 
-                fileName = padRight(name + ":", 20) + date + " at " + hour + ":" + minute + padRight(" ", 10) + progress + "%";
+                fileName = "Assignment: " + name + "`" + "Due on " + date + " at " + hour + ":" + minute + " with "+ progress + "% complete.";
                 taskList.add(fileName);
             }
 
@@ -102,14 +102,18 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
 
         //Sets up list view for selection
+//        final ListView listViewMP3 = (ListView) rootView.findViewById(R.id.listViewTask);
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+//                android.R.layout.simple_spinner_dropdown_item, taskList);
+//        listViewMP3.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        listViewMP3.setAdapter(adapter);
+//        listViewMP3.setItemChecked(0, true);
+//        listViewMP3.setDividerHeight(20);
+//        listViewMP3.setLongClickable(true);
+
         final ListView listViewMP3 = (ListView) rootView.findViewById(R.id.listViewTask);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_spinner_dropdown_item, taskList);
-        listViewMP3.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        final ListAdapter adapter = new ListAdapter(getContext(), taskList);
         listViewMP3.setAdapter(adapter);
-        listViewMP3.setItemChecked(0, true);
-        listViewMP3.setDividerHeight(20);
-        listViewMP3.setLongClickable(true);
 
 
         //Task list onLongClick Listener to ask user whether they want to finish task or edit task through a dialog
@@ -125,7 +129,7 @@ public class mainTaskView extends Fragment implements ConfirmDeleteDialogFragmen
 
                 String filename = taskList.get(pos).toString();
 
-                filename = filename.substring(0, filename.indexOf(":")).replaceAll("\\s", "");
+                filename = filename.substring(filename.indexOf(":") + 1, filename.length()).replaceAll("\\s", "");
                 listener.setFile(filename);
 
 
