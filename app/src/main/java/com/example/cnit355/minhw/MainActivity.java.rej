@@ -1,9 +1,0 @@
-diff a/app/src/main/java/com/example/cnit355/minhw/MainActivity.java b/app/src/main/java/com/example/cnit355/minhw/MainActivity.java	(rejected hunks)
-@@ -129,6 +129,7 @@
-     public void onDialogYesClick(DialogFragment dialogFragment) {
- 
-         overwrite.delete();
-+        check = null;
-     }
- 
-     @Override
